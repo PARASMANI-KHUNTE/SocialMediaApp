@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .spinner {
+          border: 4px solid rgba(0, 0, 0, 0.1);
+          border-top-color: #3498db;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+          to {
+              transform: rotate(360deg);
+          }
+      }
+      .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .modal-content {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          width: 400px;
+          max-width: 80%;
+      }
+      .hidden {
+          display: none;
+      }
+  </style>
+  </head>
+  <body class="bg-gray-100">
+    <nav class="bg-white p-4 flex justify-between">
+      <div class="logo">
+        <img src="" alt="" />
+        <h1 class="text-bold cursor-pointer">SPARKLINK</h1>
+      </div>
+      <ul class="flex justify-between space-x-10">
+        <li><a class="hover:text-blue-600" href="/home">HOME</a></li>
+        <li><a class="hover:text-blue-600" href="">CHAT</a></li>
+        <li><a class="hover:text-blue-600" href="">ACTIVITY</a></li>
+        <li><a class="hover:text-blue-600" href="/profilepage">PROFILE</a></li>
+      </ul>
+    </nav>
+
+    <div class="max-w-4xl mx-auto my-8">
+      <!-- Banner + Avatar + Username -->
+      <div class="relative">
+        <img
+          id="banner"
+          src="path/to/banner.jpg"
+          alt="Banner"
+          class="w-full h-48 object-cover"
+        />
+        <div class="absolute bottom-0 left-0 ml-4 mb-4 flex items-center">
+          <img
+            id="avatar"
+            src="path/to/avatar.jpg"
+            alt="Avatar"
+            class="w-24 h-24 rounded-full border-4 border-white"
+          />
+          <h1 id="username" class="text-white text-2xl font-bold ml-4">
+            @username
+          </h1>
+        </div>
+      </div>
+
+      <!-- Info Section -->
+      <div class="bg-white shadow-md rounded-lg p-6 mt-6">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <p id="name" class="text-lg font-semibold">Name: John Doe</p>
+            <p id="email" class="text-lg font-semibold">
+              Email: john.doe@example.com
+            </p>
+            <p id="followers" class="text-lg font-semibold">Followers: 100</p>
+            <p id="following" class="text-lg font-semibold">Following: 50</p>
+          </div>
+          <button
+            id="edit-profile-btn"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Edit Profile
+          </button>
+          
+          <div id="edit-profile-form" class="hidden">
+            <input type="file" id="avatar-input" accept="image/*" />
+            <img height="300" width="300" id="avatar-preview" src="#" alt="Avatar Preview" />
+            <input type="file" id="banner-input" accept="image/*" />
+            <img height="300" width="300" id="banner-preview" src="#" alt="Banner Preview" />
+            <div id="loadingSpinner" class="spinner hidden mx-auto my-6"></div>
+            <button
+              id="save-profile-btn"
+              class="bg-green-500 text-white px-4 py-2 rounded-md"
+            >
+              Save
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Posts Section -->
+      <div class="bg-white shadow-md rounded-lg p-6 mt-6">
+        <h2 class="text-2xl font-bold mb-4">Posts</h2>
+        <div class="space-y-4" id="posts">
+          <!-- Post Items will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <script src="profile.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>

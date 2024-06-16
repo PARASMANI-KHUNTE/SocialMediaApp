@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login and Signup Form</title>
+    <!-- Include Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 h-screen flex justify-center items-center">
+    <div class="bg-white p-8 rounded-lg shadow-md">
+      <h1 class="text-bold text-center bg-gray-200 p-4 rounded">Sparkklink</h1>
+      <div id="formContainer">
+        <h2 class="text-2xl mb-4" id="formTitle">Login</h2>
+        <form id="loginForm" class="mb-4">
+          <div class="mb-4">
+            <label for="loginUsername" class="block">Username:</label>
+            <input
+              type="text"
+              id="loginUsername"
+              name="username"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="loginPassword" class="block">Password:</label>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+
+        <form id="signupForm" class="mb-4" style="display: none">
+          <div class="mb-4">
+            <label for="signupName" class="block">Name:</label>
+            <input
+              type="text"
+              id="signupName"
+              name="name"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="signupUsername" class="block">Username:</label>
+            <input
+              type="text"
+              id="signupUsername"
+              name="username"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="signupEmail" class="block">Email:</label>
+            <input
+              type="email"
+              id="signupEmail"
+              name="email"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="signupPassword" class="block">Password:</label>
+            <input
+              type="password"
+              id="signupPassword"
+              name="password"
+              class="border rounded px-3 py-1 w-full"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Signup
+          </button>
+        </form>
+
+        <p id="toggleForm" class="text-blue-500 cursor-pointer">
+          Don't have an account? Signup
+        </p>
+      </div>
+    </div>
+
+    <!-- Include Axios for making HTTP requests -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document
+        .getElementById("toggleForm")
+        .addEventListener("click", function () {
+          const loginForm = document.getElementById("loginForm");
+          const signupForm = document.getElementById("signupForm");
+          const formTitle = document.getElementById("formTitle");
+          const toggleText = document.getElementById("toggleForm");
+
+          if (loginForm.style.display === "none") {
+            loginForm.style.display = "block";
+            signupForm.style.display = "none";
+            formTitle.textContent = "Login";
+            toggleText.textContent = "Don't have an account? Signup";
+          } else {
+            loginForm.style.display = "none";
+            signupForm.style.display = "block";
+            formTitle.textContent = "Signup";
+            toggleText.textContent = "Already have an account? Login";
+          }
+        });
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const data = {};
+
+          // Extract form data efficiently
+          for (const [key, value] of formData.entries()) {
+            data[key] = value;
+          }
+
+          try {
+            const response = await axios.post("/login", data);
+            console.log("Login Success:", response.data);
+            window.location.href = "/home"; // Redirect to home page on success
+          } catch (error) {
+            if (error.response && error.response.status === 409) {
+              // Handle 409 Conflict error gracefully
+              const errorMessage = error.response.data; // Access specific error message
+              alert(`Error: ${errorMessage}`); // Display user-friendly error message
+            } else {
+              // Handle other errors (e.g., network errors, invalid credentials)
+              console.error("Login Error:", error);
+
+              // Provide more specific error message based on context
+              if (error.response && error.response.status === 401) {
+                alert("Invalid username or password.");
+              } else {
+                alert(
+                  "An error occurred during login. Please try again later."
+                );
+              }
+            }
+          }
+        });
+
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const data = {};
+
+          // Extract form data efficiently
+          for (const [key, value] of formData.entries()) {
+            data[key] = value;
+          }
+
+          try {
+            const response = await axios.post("/signup", data);
+            console.log("Signup Success:", response.data);
+            alert("User Successfully Created!");
+            window.location.href = "/index"; // Redirect to index page on success
+          } catch (error) {
+            if (error.response && error.response.status === 409) {
+              // Handle 409 Conflict error gracefully
+              const errorMessage = error.response.data; // Access specific error message
+              alert(`Error: ${errorMessage}`); // Display user-friendly error message
+            } else {
+              // Handle other errors (e.g., network errors, server errors)
+              console.error("Signup Error:", error);
+              alert("An error occurred during signup. Please try again later.");
+            }
+          }
+        });
+    </script>
+  </body>
+</html>

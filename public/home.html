@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+
+  <!-- Include Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css">
+  <style>
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        max-width: 80%;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+</head>
+<body class="bg-gray-100 h-screen ">
+  
+  <nav class="bg-white  p-4 flex justify-between">
+    <div class="logo">
+      <img src="" alt=""> 
+      <h1 class="text-bold cursor-pointer">SPARKLINK</h1>
+    </div>
+    <ul class="flex justify-between space-x-10">
+      <button id="togglePostModel" class="bg-blue-500 text-white px-4 py-2 rounded text-bold hover:bg-blue-600">+</button>
+      <li><a class="hover:text-blue-600" href="/home">HOME</a></li>
+      <li><a class="hover:text-blue-600" href="">CHAT</a></li>
+      <li><a class="hover:text-blue-600" href="">ACTIVITY</a></li>
+      <li><a class="hover:text-blue-600" href="/profilepage">PROFILE</a></li>
+      <li><a id="logoutButton" class="text-red-400"  href="">LOGOUT</a></li>
+    </ul>
+  </nav>
+  
+  <!-- post model -->
+  <div class="postmodel" id="postModel" >
+    <h1 class="text-2xl mb-4">Create Post</h1>
+    <form id="postForm">
+      <label for="title" class="block">Post Title</label>
+      <input type="text" id="postTitle" name="title" class="border rounded px-3 py-1 mb-4 w-full">
+
+      <label for="desc" class="block">Post Desc</label>
+      <input type="text" id="postDesc" name="desc" class="border rounded px-3 py-1 mb-4 w-full">
+
+      <div class="mb-4">
+        <label for="img" class="mr-2">Image</label>
+        <input type="radio" name="mediaType" value="img" class="mr-4">
+
+        <label for="video" class="mr-2">Video</label>
+        <input type="radio" name="mediaType" value="video" class="mr-4">
+
+        <label for="textOnly" class="mr-2">Text Only</label>
+        <input type="radio" name="mediaType" value="textOnly">
+      </div>
+
+      <div id="mediaFileSection" class="mb-4 hidden">
+        <label for="media" class="block">Select Media</label>
+        <input type="file" id="mediaFile" class="border rounded px-3 py-1 w-full">
+      </div>
+
+      <div class="media-prev mb-4">
+        <img id="imgPreview" alt="Image Preview">
+        <video id="videoPreview" controls></video>
+      </div>
+
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">POST</button>
+    </form>
+    <div id="loadingSpinner" class="spinner hidden mx-auto my-6"></div>
+  </div>
+
+  <div id="feedSection" class="container mx-auto px-4 py-6">
+    <!-- Posts will be appended here -->
+  </div>
+  <div id="loadingSpinner" class="hidden flex justify-center my-6">
+    <div class="spinner border-t-4 border-blue-500 rounded-full w-8 h-8 animate-spin"></div>
+  </div>
+  
+
+  <!-- Include Axios for making HTTP requests -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
